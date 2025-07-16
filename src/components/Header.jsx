@@ -1,21 +1,15 @@
-import { act, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/logo.png";
 import userIcon from "../assets/user.png";
 import { useAppContext } from "../context/AppContext";
-import { IoIosLogOut } from "react-icons/io";
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  activeTab,
-  setActiveTab,
-} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const Header = () => {
+export default function Header() {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const {
     walletAddress,
     setWalletAddress,
-    setUser,
     connectWallet,
     handleSignOut,
     activeTab,
@@ -23,17 +17,10 @@ const Header = () => {
   } = useAppContext();
 
   const navigate = useNavigate();
-  const [existingUser, setExistingUser] = useState(true);
+  const [existingUser, setExistingUser] = useState(false);
 
   // =====================================================
-  const isExistingUser = async () => false;
-  const getUserDetails = (address) => {
-    let name = "Narayan Gawas";
-    let email = "narayan@example.com";
-    let walletAddress = address;
-
-    return { name, email, walletAddress };
-  };
+  const isExistingUser = async () => setExistingUser(false);
   //   =====================================================
 
   useEffect(() => {
@@ -41,6 +28,7 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
+    console.log("Wallet Address:", walletAddress);
     if (walletAddress) {
       if (existingUser) {
         navigate("/bots");
@@ -68,102 +56,142 @@ const Header = () => {
 
   const fetechUserData = async () => {
     try {
-      let userDetails = localStorage.getItem("userDetails");
-      if (userDetails) {
-        setUser(JSON.parse(userDetails));
-        setWalletAddress(JSON.parse(userDetails).walletAddress);
+      let cachedWalletAddress = localStorage.getItem("walletAddress");
+      if (cachedWalletAddress) {
+        setWalletAddress(cachedWalletAddress);
       } else {
-        if (walletAddress) {
-          let user = getUserDetails(walletAddress);
-          localStorage.setItem("userDetails", JSON.stringify(user));
-          setUser(user);
-          setWalletAddress(user.walletAddress);
-        }
+        navigate("/");
       }
     } catch (error) {
       connectWallet.log(error);
-      localStorage.removeItem("userDetails");
-      setUser(null);
+      localStorage.removeItem("walletAddress");
       setWalletAddress(null);
     }
   };
 
   useEffect(() => {
     fetechUserData();
-  }, [walletAddress]);
+  }, []);
 
   return (
-    <header className="text-white z-10">
-      <div className="mx-6 lg:mx-16 flex flex-row items-center justify-between my-4">
-        <div
-          onClick={() => {
-            handleSignOut();
-            navigate("/");
-          }}
-          className="flex flex-row gap-2 items-center cursor-pointer"
-        >
-          <img src={logo} alt="Logo" className="h-8 w-8 lg:h-10 lg:w-10" />
-          <p className="text-xl lg:text-3xl font-bold">ABCD</p>
+    <nav className="z-10 text-white">
+      <div className="flex flex-wrap items-center justify-between py-4 mx-6 md:mx-16 ">
+        <a href="/" className="flex items-center space-x-3">
+          <img src={logo} className="h-8" alt="Flowbite Logo" />
+          <span className="self-center text-2xl font-bold whitespace-nowrap">
+            TokeBro.AI
+          </span>
+        </a>
+        <div className="flex items-center space-x-3 md:order-2 md:space-x-0">
+          {walletAddress ? (
+            <>
+              <button
+                type="button"
+                className="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300"
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              >
+                <span className="sr-only">Open user menu</span>
+                <img
+                  className="w-8 h-8 rounded-full"
+                  src={userIcon}
+                  alt="user"
+                />
+              </button>
+
+              {/* Dropdown Menu */}
+              {isDropdownOpen && (
+                <div className="absolute z-50 my-4 text-base list-none border border-white rounded-lg shadow-lg bg-white/10 backdrop-blur-xl right-20 md:right-16 top-10">
+                  <a
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="block px-4 py-2 text-sm hover:bg-white/20"
+                  >
+                    <span className="block text-sm text-gray-300 cursor-pointer">
+                      {walletAddress?.substring(0, 4) +
+                        "..." +
+                        walletAddress?.slice(-4)}
+                    </span>
+                  </a>
+                  <a
+                    onClick={() => {
+                      handleSignOut();
+                      setIsDropdownOpen(false);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="block px-4 py-2 text-sm hover:bg-white/20"
+                  >
+                    Sign out
+                  </a>
+                </div>
+              )}
+
+              <button
+                type="button"
+                className="inline-flex items-center justify-center w-10 h-10 p-2 text-sm text-white rounded-lg md:hidden focus:ring-2 focus:ring-white"
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              >
+                <span className="sr-only">Open main menu</span>
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 17 14"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M1 1h15M1 7h15M1 13h15"
+                  />
+                </svg>
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={connectWallet}
+              className="text-xs md:text-sm lg:text-base bg-gradient-to-tr from-[#933FFE] to-[#18C8FF] hover:from-[#18C8FF] hover:to-[#933FFE] text-white py-2 px-4 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg"
+            >
+              Connect Wallet
+            </button>
+          )}
         </div>
         {walletAddress && (
-          <div className="flex flex-row gap-2 items-center">
-            <Link
-              to="/sell"
-              className={`${
-                activeTab === "sell" && "bg-white/10"
-              } px-6 py-1 rounded-md text-sm hover:bg-white/20 transition-colors`}
-            >
-              Sell
-            </Link>
-            <Link
-              to="/bots"
-              className={`${
-                activeTab === "bots" && "bg-white/10"
-              } px-6 py-1 rounded-md text-sm hover:bg-white/20 transition-colors`}
-            >
-              Bots
-            </Link>
+          <div
+            className={`items-center justify-between w-full md:flex md:w-auto md:order-1 ${
+              isMobileMenuOpen ? "block" : "hidden"
+            }`}
+          >
+            <ul className="flex flex-col p-4 mt-4 font-medium border border-gray-100 rounded-lg md:p-0 md:flex-row md:space-x-2 md:mt-0 md:border-0 ">
+              <li>
+                <div
+                  onClick={() => {
+                    navigate("/sell");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`block px-6 py-1 text-sm transition-colors rounded-md hover:bg-white/20 ${
+                    activeTab === "sell" && "bg-white/10"
+                  }`}
+                >
+                  Sell
+                </div>
+              </li>
+              <li>
+                <div
+                  onClick={() => {
+                    navigate("/bots");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`block px-6 py-1 text-sm transition-colors rounded-md hover:bg-white/20 ${
+                    activeTab === "bots" && "bg-white/10"
+                  }`}
+                >
+                  Bots
+                </div>
+              </li>
+            </ul>
           </div>
         )}
-
-        {walletAddress ? (
-          <ConnectedWalletUI />
-        ) : (
-          <button
-            onClick={connectWallet}
-            className="text-sm lg:text-base bg-gradient-to-tr from-[#933FFE] to-[#18C8FF] hover:from-[#18C8FF] hover:to-[#933FFE] text-white py-2 px-4 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg"
-          >
-            Connect Wallet
-          </button>
-        )}
       </div>
-    </header>
+    </nav>
   );
-};
-
-const ConnectedWalletUI = () => {
-  const [showMenu, setShowMenu] = useState(false);
-  const { user, handleSignOut } = useAppContext();
-
-  return (
-    <div className=" flex items-center flex-row gap-2">
-      <div className="flex flex-row gap-2 items-center ">
-        <p className="text-sm lg:text-base text-gray-300">{user?.name}</p>
-        <img
-          className="w-8 h-8  bg-gray-800  border border-white rounded-full focus:ring-4 focus:ring-gray-300 "
-          src={userIcon}
-          alt="User"
-          onClick={() => setShowMenu((prev) => !prev)}
-        />
-      </div>
-      <button
-        onClick={handleSignOut}
-        className=" p-1.5 bg-gray-800 border border-white text-white text-sm rounded-full  hover:bg-gray-700  cursor-pointer"
-      >
-        <IoIosLogOut size={20} />
-      </button>
-    </div>
-  );
-};
-
-export default Header;
+}

@@ -11,11 +11,10 @@ import glow3 from "./assets/glow-3.png";
 import leftPlanets from "./assets/left.png";
 import rightPlanets from "./assets/right.png";
 import { useAppContext } from "./context/AppContext";
-import { act } from "react";
 function App() {
-  const { activeTab, setActiveTab } = useAppContext();
+  const { activeTab } = useAppContext();
   return (
-    <div className="App h-screen w-screen bg-black relative overflow-hidden flex flex-col">
+    <div className="relative flex flex-col w-screen h-screen overflow-hidden bg-black App">
       {activeTab === "dashboard" ? (
         <>
           <img
@@ -44,12 +43,12 @@ function App() {
           {" "}
           <img
             src={glow3}
-            className="absolute bottom-[-15rem] left-[-20rem] h-[60rem]"
+            className="absolute bottom-[-15rem]  left-[-12rem] md:left-[-20rem] h-[60rem]"
             alt="Glow 1"
           />
           <img
             src={glow3}
-            className="absolute top-[-25rem] right-[-20rem]  h-[60rem]"
+            className="absolute  top-[-25rem] right-[-12rem] md:right-[-20rem]  h-[60rem]"
             alt="Glow 2"
           />
         </>

@@ -1,15 +1,12 @@
-import Modal from "../components/Modal";
-
 function BotsPage() {
   return (
     //add div with background image from assets
-    <div className="flex-grow flex flex-col items-center justify-center overflow-hidden">
-      <div className="flex-grow text-white flex flex-col items-center justify-center z-10 text-4xl md:text-5xl lg:text-7xl font-bold text-center">
-        <p className="text-4xl md:text-5xl lg:text-7xl font-bold text-center text-white">
+    <div className="flex flex-col items-center justify-center flex-grow overflow-hidden">
+      <div className="z-10 flex flex-col items-center justify-center flex-grow text-4xl font-bold text-center text-white md:text-5xl lg:text-7xl">
+        <p className="text-4xl font-bold text-center text-white md:text-5xl lg:text-7xl">
           Bots
         </p>
       </div>
-      <Modal />
     </div>
   );
 }

@@ -6,9 +6,36 @@ const AppContext = createContext();
 
 // Create a provider component
 export const AppProvider = ({ children }) => {
+  const strategies = [
+    {
+      title: "TWAP",
+      description: "Time-Weighted Average Price",
+      params: [
+        { name: "Order Duration", type: "string" },
+        { name: "Percent", type: "float" },
+      ],
+    },
+    {
+      title: "VWAP",
+      description: "Volume-Weighted Average Price",
+      params: [
+        { name: "Order Duration", type: "string" },
+        { name: "Percent", type: "float" },
+      ],
+    },
+    {
+      title: "PVOL",
+      description: "Participation Volume",
+      params: [
+        { name: "Order Duration", type: "string" },
+        { name: "Paricipation Volume", type: "float" },
+      ],
+    },
+  ];
   const [walletAddress, setWalletAddress] = useState(null);
-  const [user, setUser] = useState(null);
-  const [selectedToken, setSelectedToken] = useState(null);
+  const [selectedStrategy, setSelectedStrategy] = useState(strategies[0]);
+  const [userTokenData, setUserTokenData] = useState([]);
+  const [selectedToken, setSelectedToken] = useState();
   const [activeTab, setActiveTab] = useState("dashboard");
 
   const isPhantomInstalled = () => window.solana && window.solana.isPhantom;
@@ -35,8 +62,6 @@ export const AppProvider = ({ children }) => {
     }
 
     setWalletAddress(null);
-    localStorage.removeItem("userDetails");
-    setUser(null);
     console.log("Wallet disconnected.");
   };
 
@@ -45,14 +70,17 @@ export const AppProvider = ({ children }) => {
       value={{
         walletAddress,
         setWalletAddress,
-        user,
-        setUser,
         activeTab,
         setActiveTab,
         selectedToken,
         setSelectedToken,
+        selectedStrategy,
+        setSelectedStrategy,
+        userTokenData,
+        setUserTokenData,
         connectWallet,
         handleSignOut,
+        strategies,
       }}
     >
       {children}
