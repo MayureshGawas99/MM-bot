@@ -76,12 +76,21 @@ export default function Header() {
   return (
     <nav className="z-10 text-white">
       <div className="flex flex-wrap items-center justify-between py-4 mx-6 md:mx-16 ">
-        <a href="/" className="flex items-center space-x-3">
+        <div
+          onClick={() => {
+            if (walletAddress) {
+              navigate("/sell");
+            } else {
+              navigate("/");
+            }
+          }}
+          className="flex items-center space-x-3 cursor-pointer"
+        >
           <img src={logo} className="h-8" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-bold whitespace-nowrap">
             TokeBro.AI
           </span>
-        </a>
+        </div>
         <div className="flex items-center space-x-3 md:order-2 md:space-x-0">
           {walletAddress ? (
             <>
@@ -103,9 +112,9 @@ export default function Header() {
                 <div className="absolute z-50 my-4 text-base list-none border border-white rounded-lg shadow-lg bg-white/10 backdrop-blur-xl right-20 md:right-16 top-10">
                   <a
                     onClick={() => setIsDropdownOpen(false)}
-                    className="block px-4 py-2 text-sm hover:bg-white/20"
+                    className="block px-4 py-2 text-sm cursor-pointer hover:bg-white/20"
                   >
-                    <span className="block text-sm text-gray-300 cursor-pointer">
+                    <span className="block text-sm text-gray-300 ">
                       {walletAddress?.substring(0, 4) +
                         "..." +
                         walletAddress?.slice(-4)}
@@ -117,7 +126,7 @@ export default function Header() {
                       setIsDropdownOpen(false);
                       setIsMobileMenuOpen(false);
                     }}
-                    className="block px-4 py-2 text-sm hover:bg-white/20"
+                    className="block px-4 py-2 text-sm cursor-pointer hover:bg-white/20"
                   >
                     Sign out
                   </a>
@@ -168,7 +177,7 @@ export default function Header() {
                     navigate("/sell");
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`block px-6 py-1 text-sm transition-colors rounded-md hover:bg-white/20 ${
+                  className={`block px-6 py-1 text-sm transition-colors rounded-md hover:bg-white/20 cursor-pointer ${
                     activeTab === "sell" && "bg-white/10"
                   }`}
                 >
@@ -181,7 +190,7 @@ export default function Header() {
                     navigate("/bots");
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`block px-6 py-1 text-sm transition-colors rounded-md hover:bg-white/20 ${
+                  className={`block px-6 py-1 text-sm transition-colors rounded-md hover:bg-white/20 cursor-pointer ${
                     activeTab === "bots" && "bg-white/10"
                   }`}
                 >

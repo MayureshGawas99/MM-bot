@@ -38,6 +38,7 @@ const Table = () => {
                       src={token?.tokenList?.image}
                       alt="symbol"
                       className="w-8 h-8"
+                      loading="lazy"
                     />
                     <div className="flex flex-col">
                       <p className="line-clamp-1">{token?.tokenList?.name}</p>
@@ -73,6 +74,7 @@ const Table = () => {
                 src={token?.tokenList?.image}
                 alt="symbol"
                 className="w-8 h-8"
+                loading="lazy"
               />
               <div className="flex flex-col">
                 <p className="text-sm line-clamp-1">

@@ -38,9 +38,9 @@ function HomePage() {
   return (
     <div className="z-10 flex flex-col flex-grow overflow-y-auto ">
       <div className=" flex flex-col items-center justify-center min-h-[calc(100vh-40px)] flex-shrink-0 text-2xl font-bold text-center text-white md:text-5xl lg:text-7xl">
-        <div className="p-2 mx-6 border border-white shadow-lg md:p-6 md:rounded-3xl bg-white/10 backdrop-blur-xl rounded-xl">
-          <p className="">Send Your Token to the Moon</p>
-          <p>with AI 🚀</p>
+        <div className="p-4 mx-6 border border-white shadow-lg md:mx-32 md:p-6 md:rounded-3xl bg-white/10 backdrop-blur-xl rounded-xl">
+          <p className="">Send Your Token to the Moon with AI 🚀</p>
+          {/* <p></p> */}
           <p className="mt-2 text-sm md:text-xl text-wrap">
             AI-powered market-making for Pump.fun, Solana, and beyond.
           </p>
