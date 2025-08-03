@@ -11,24 +11,24 @@ export const AppProvider = ({ children }) => {
       title: "TWAP",
       description: "Time-Weighted Average Price",
       params: [
-        { name: "Order Duration", type: "string" },
-        { name: "Percent", type: "float" },
+        { name: "Order Duration", type: "string", placeholder: "HH:MM:SS" },
+        { name: "Percent", type: "float", placeholder: "0.00" },
       ],
     },
     {
       title: "VWAP",
       description: "Volume-Weighted Average Price",
       params: [
-        { name: "Order Duration", type: "string" },
-        { name: "Percent", type: "float" },
+        { name: "Order Duration", type: "string", placeholder: "HH:MM:SS" },
+        { name: "Percent", type: "float", placeholder: "0.00" },
       ],
     },
     {
       title: "PVOL",
       description: "Participation Volume",
       params: [
-        { name: "Order Duration", type: "string" },
-        { name: "Paricipation Volume", type: "float" },
+        { name: "Order Duration", type: "string", placeholder: "HH:MM:SS" },
+        { name: "Participation Volume", type: "float", placeholder: "0.00" },
       ],
     },
   ];

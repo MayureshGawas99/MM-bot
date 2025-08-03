@@ -109,7 +109,7 @@ export default function Header() {
 
               {/* Dropdown Menu */}
               {isDropdownOpen && (
-                <div className="absolute z-50 my-4 text-base list-none border border-white rounded-lg shadow-lg bg-white/10 backdrop-blur-xl right-20 md:right-16 top-10">
+                <div className="absolute z-50 my-4 text-base list-none bg-[#1C1C1C]/60 backdrop-blur-md rounded-xl shadow-lg border border-white text-white right-20 md:right-16 top-10">
                   <a
                     onClick={() => setIsDropdownOpen(false)}
                     className="block px-4 py-2 text-sm cursor-pointer hover:bg-white/20"
@@ -158,7 +158,9 @@ export default function Header() {
           ) : (
             <button
               onClick={connectWallet}
-              className="text-xs md:text-sm lg:text-base bg-gradient-to-tr from-[#933FFE] to-[#18C8FF] hover:from-[#18C8FF] hover:to-[#933FFE] text-white py-2 px-4 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg"
+              className="order-1 px-4 py-2 text-sm font-medium text-white transition-all duration-300 rounded-lg sm:px-6 sm:py-3 sm:text-base bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 hover:scale-105 sm:order-2"
+
+              // className="text-xs md:text-sm lg:text-base bg-gradient-to-tr from-[#933FFE] to-[#18C8FF] hover:from-[#18C8FF] hover:to-[#933FFE] text-white py-2 px-4 rounded-lg font-bold transition-all duration-300 hover:scale-105 hover:shadow-lg"
             >
               Connect Wallet
             </button>
