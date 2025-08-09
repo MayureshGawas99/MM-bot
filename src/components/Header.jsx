@@ -3,6 +3,7 @@ import logo from "../assets/logo.png";
 import userIcon from "../assets/user.png";
 import { useAppContext } from "../context/AppContext";
 import { useLocation, useNavigate } from "react-router-dom";
+import { LogOut, Wallet } from "lucide-react";
 
 export default function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -88,7 +89,7 @@ export default function Header() {
         >
           <img src={logo} className="h-8" alt="Flowbite Logo" />
           <span className="self-center text-2xl font-bold whitespace-nowrap">
-            TokeBro.AI
+            TokenBro.AI
           </span>
         </div>
         <div className="flex items-center space-x-3 md:order-2 md:space-x-0">
@@ -110,26 +111,30 @@ export default function Header() {
               {/* Dropdown Menu */}
               {isDropdownOpen && (
                 <div className="absolute z-50 my-4 text-base list-none bg-[#1C1C1C]/60 backdrop-blur-md rounded-xl shadow-lg border border-white text-white right-20 md:right-16 top-10">
-                  <a
+                  <div
                     onClick={() => setIsDropdownOpen(false)}
-                    className="block px-4 py-2 text-sm cursor-pointer hover:bg-white/20"
+                    className="flex flex-row gap-2 px-4 py-2 text-sm cursor-pointer hover:bg-white/20"
                   >
+                    <Wallet size={20} />
+
                     <span className="block text-sm text-gray-300 ">
                       {walletAddress?.substring(0, 4) +
                         "..." +
                         walletAddress?.slice(-4)}
                     </span>
-                  </a>
-                  <a
+                  </div>
+                  <div
                     onClick={() => {
                       handleSignOut();
                       setIsDropdownOpen(false);
                       setIsMobileMenuOpen(false);
                     }}
-                    className="block px-4 py-2 text-sm cursor-pointer hover:bg-white/20"
+                    className="flex flex-row gap-2 px-4 py-2 text-sm cursor-pointer hover:bg-white/20"
                   >
-                    Sign out
-                  </a>
+                    <LogOut size={20} />
+
+                    <span>Sign out</span>
+                  </div>
                 </div>
               )}
 

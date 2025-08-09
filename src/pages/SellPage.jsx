@@ -487,8 +487,8 @@ function SellPage() {
       {/* Header */}
       <div className="bg-[#1C1C1C]/60 backdrop-blur-md rounded-xl shadow-lg border border-white text-white overflow-auto mx-3 sm:mx-6 md:mx-16 p-3 sm:p-6 my-3 sm:my-5">
         <div className="mb-6 sm:mb-8">
-          <div className="flex flex-col gap-3 mb-4 sm:flex-row sm:items-center sm:justify-between sm:mb-6 sm:gap-0">
-            <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex flex-row justify-between gap-3 mb-4 sm:items-center sm:mb-6 sm:gap-0">
+            <div className="flex flex-row items-center gap-2 sm:gap-3">
               <Wallet className="w-6 h-6 text-purple-400 sm:w-8 sm:h-8" />
               <h1 className="text-xl font-bold text-white sm:text-2xl lg:text-3xl">
                 My Tokens
@@ -498,22 +498,6 @@ function SellPage() {
               </span>
             </div>
             <div className="flex items-center gap-2 sm:gap-3">
-              {/* <button
-                onClick={() => setShowValues(!showValues)}
-                className="flex items-center gap-1 px-3 py-2 text-xs text-white transition-all duration-300 border rounded-lg sm:gap-2 sm:px-4 bg-white/10 hover:bg-white/20 backdrop-blur-xl border-white/20 sm:text-sm"
-              >
-                {showValues ? (
-                  <Eye className="w-3 h-3 sm:w-4 sm:h-4" />
-                ) : (
-                  <EyeOff className="w-3 h-3 sm:w-4 sm:h-4" />
-                )}
-                <span className="hidden sm:inline">
-                  {showValues ? "Hide Values" : "Show Values"}
-                </span>
-                <span className="sm:hidden">
-                  {showValues ? "Hide" : "Show"}
-                </span>
-              </button> */}
               <button
                 onClick={fetchData}
                 className="flex items-center gap-1 px-3 py-2 text-xs text-white transition-all duration-300 border rounded-lg sm:gap-2 sm:px-4 bg-white/10 hover:bg-white/20 backdrop-blur-xl border-white/20 sm:text-sm"
